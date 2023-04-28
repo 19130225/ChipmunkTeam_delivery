@@ -1,13 +1,13 @@
-package com.project.deliveryroutes;
+package com.example.com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OptimalDeliveryRoutesApplication {
+public class LeafletApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OptimalDeliveryRoutesApplication.class, args);
+		SpringApplication.run(LeafletApplication.class, args);
 	}
 
 }

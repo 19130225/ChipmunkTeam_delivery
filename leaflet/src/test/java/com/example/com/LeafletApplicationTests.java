@@ -1,10 +1,10 @@
-package com.project.deliveryroutes;
+package com.example.com;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OptimalDeliveryRoutesApplicationTests {
+class LeafletApplicationTests {
 
 	@Test
 	void contextLoads() {
