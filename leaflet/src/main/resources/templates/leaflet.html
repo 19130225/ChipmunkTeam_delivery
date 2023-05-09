@@ -29,17 +29,56 @@
  // default map layer
     let map = L.map('map', {
         layers: MQ.mapLayer(),
-        center: [35.791188, -78.636755],
+        center: [0, -0],
         zoom: 12
     });
         
-
+// update location
+ function updateLocation(lat, lng) {
+	 L.marker([lat, lng]).addTo(map);
+	 map.setView([lat, lng], 13); // Thay đổi tọa độ trung tâm của bản đồ
+ }
+ //
+ navigator.geolocation.getCurrentPosition((position) => {
+	 const {latitude, longitude} = position.coords;
+	 L.marker([latitude, longitude]).addTo(map); // Tạo Marker tại vị trí này
+	 map.setView([latitude, longitude], 13); // Phóng to bản đồ đến vị trí này
+	 // Sử dụng fetch API để cập nhật thông tin vị trí từ địa chỉ IP
+	 setInterval(() => {
+		 fetch('https://geoip-db.com/json/')
+				 .then((response) => response.json())
+				 .then((data) => {
+					 const {latitude, longitude} = data; // Lấy tọa độ từ kết quả trả về
+					 updateLocation(latitude, longitude); // Cập nhật vị trí mới
+					 map.setView([latitude, longitude], 13); // Cập nhật vị trí hiển thị trên bản đồ
+				 })
+				 .catch((error) => {
+					 console.error(error);
+				 });
+	 }, 5000); // Thực hiện cập nhật mỗi 5 giây
+ }, (error) => {
+	 console.error(error);
+	 // Sử dụng fetch API để cập nhật thông tin vị trí từ địa chỉ IP
+	 setInterval(() => {
+		 fetch('https://geoip-db.com/json/')
+				 .then((response) => response.json())
+				 .then((data) => {
+					 const {latitude, longitude} = data; // Lấy tọa độ từ kết quả trả về
+					 updateLocation(latitude, longitude); // Cập nhật vị trí mới
+					 map.setView([latitude, longitude], 13); // Cập nhật vị trí hiển thị trên bản đồ
+				 })
+				 .catch((error) => {
+					 console.error(error);
+				 });
+	 }, 5000); // Thực hiện cập nhật mỗi 5 giây
+ });
+ //
         function runDirection(start, end) {
             
             // recreating new map layer after removal
             map = L.map('map', {
                 layers: MQ.mapLayer(),
-                center: [35.791188, -78.636755],
+                center: [0, 0],
                 zoom: 12
             });
             
