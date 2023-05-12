@@ -134,31 +134,32 @@
 				 instructions.forEach(instruction => {
 					 const li = document.createElement('li');
 					  li.classList.add('item');
+
 					 if (instruction.indexOf("Turn left") !== -1) {
 
-						 instruction = instruction.replace("Turn left", " Turn left");
+						 instruction = instruction.replace("Turn left", "<div><img class='img_icon_instruction' src='img/arrow_back_left_icon.png'> Turn left</div>");
 
 					 }
 
 					 if (instruction.indexOf("Turn right") !== -1) {
 
-						 instruction = instruction.replace("Turn right", "Turn right");
+						 instruction = instruction.replace("Turn right", "<div><img class='img_icon_instruction' src='img/turn-right.png'> Turn right</div>");
 
 					 }
 					 if (instruction.indexOf("Keep right") !== -1) {
 
-						 instruction = instruction.replace("Keep right", "Keep right");
+						 instruction = instruction.replace("Keep right", "<div><img class='img_icon_instruction' src='img/top-right.png'> Keep right</div>");
 
 					 }
 					 if (instruction.indexOf("Keep left") !== -1) {
 
-						 instruction = instruction.replace("Keep left", " Keep left");
+						 instruction = instruction.replace("Keep left", "<div><img class='img_icon_instruction' src='img/340481594_885769662488655_4930446522493437372_n.jpg'> Keep left</div>");
 
 					 }
 					 if (instruction.indexOf("Continue") !== -1 || instruction.indexOf("Head") !== -1) {
 
-						 instruction = instruction.replace("Continue", "Continue");
-						 instruction = instruction.replace("Head", "Head");
+						 instruction = instruction.replace("Continue", "<div><img class='img_icon_instruction' src='img/up-arrow.png'> Continue</div>");
+						 instruction = instruction.replace("Head", "<div><img class='img_icon_instruction' src='img/up-arrow.png'> Head</div>");
 
 					 }
 					 li.innerHTML = instruction;
