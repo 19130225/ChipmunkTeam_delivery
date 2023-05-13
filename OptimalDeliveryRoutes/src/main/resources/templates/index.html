@@ -10,8 +10,11 @@
 <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css}">
          <script type="text/javascript">
 	$(document).ready(function() {
-		$('#start, #end').autocomplete({
-			source : 'search'
+		$('#start, #destination').autocomplete({
+			source : 'search',
+			open: function(event, ui) {
+	            $('.ui-autocomplete').css('z-index', '9999');
+	        }
 		});
 	});
 </script>
