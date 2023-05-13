@@ -1,4 +1,3 @@
-
 function myFunction() {
   var x = document.getElementById("service-content");
   	var	y = document.getElementById("map-content");

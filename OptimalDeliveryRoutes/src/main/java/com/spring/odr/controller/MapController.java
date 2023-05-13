@@ -1,45 +1,35 @@
 package com.spring.odr.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.spring.odr.LocationRepository;
-import com.spring.odr.entity.Location;;
+import com.spring.odr.service.LocationService;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class MapController {
 	
 	@Autowired
-	LocationRepository locationRepository;
-
-	@GetMapping("/")
-	public String redirectToLogin(Authentication authentication) {
-	    if (authentication == null || !authentication.isAuthenticated()) {
-	        return "redirect:/login";
-	    }
-	    return "redirect:/index";
-	}
-
-	@GetMapping("/login")
-	public String login() {
-	    return "login";
-	}
-
-	@GetMapping("/index")
-	public String showMap() {
-	    return "index";
-	}
+	LocationService service;
 	
-	 @GetMapping
-	 public List<String> getAllLocation() {
-		 List<Location> destination = locationRepository.findAll();
-		 List<String> locationName = destination.stream().map(Location::getLocation_end).collect(Collectors.toList());
-		 return locationName;
-	 }
+	@GetMapping("/")
+	public String showMap() {
+		return "index";
+	}
+
+	@RequestMapping(value = "search", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> search(HttpServletRequest request) {
+		return service.search(request.getParameter("term"));
+	}
+
 
 }

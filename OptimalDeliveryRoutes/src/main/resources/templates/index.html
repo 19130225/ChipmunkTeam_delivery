@@ -1,45 +1,25 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+ <html xmlns:th="http://www.thymeleaf.org">
     <head>
     	<title>Chipmunk Web App</title>
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css}" />
          <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css}">
         <link rel="stylesheet" th:href="@{css/style.css}">
         <script src="index.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <script>
-  $(function() {
-	    $.ajax({
-	        url: "/",
-	        type: "GET",
-	        success: function(response) {
-	            $("#destination").autocomplete({
-	                source: response
-	            });
-	        }
-	    });
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css}">
+         <script type="text/javascript">
+	$(document).ready(function() {
+		$('#start, #end').autocomplete({
+			source : 'search'
+		});
 	});
-
-  </script>
+</script>
     </head>
 <body style="border: 0; margin: 0">
-<!-- 	<div id="map">
-		<div class="formBlock1" style="margin-left: 1300px;">
-			<button onclick="showAlert()"><img style="width: 46px;height: 46px;" src="img/trash.png" alt=""></button>
-		</div>
-	<div class="formBlock">
-		<form id="form">
-			<div id="error-message"></div><br>
-			<input type="text" name="start" class="input" id="start"
-				placeholder="Choose starting point" /> <input type="text"
-				name="end" class="input" id="destination"
-				placeholder="Choose starting point" />
-			<button style="display: none;" type="submit">Get Directions</button>
-		</form>
-	</div>
-	</div> -->
-	 <div id='map'></div>
+	 <div id='map'>
+	 	
+	 </div>
         <div class="formBlock" id="map-content">
             <form id="form">
                 <div class="logo">
@@ -52,8 +32,8 @@
                     </div>
                 </div>
 
-                <input type="text" name="start" class="input" id="start" placeholder="Điểm bắt đầu" />
-                <input type="text" name="end" class="input" id="destination" placeholder="Điểm kết thúc" />
+                <input type="text" name="term" class="input" id="start" placeholder="Điểm bắt đầu" />
+                <input type="text" name="term" class="input" id="end" placeholder="Điểm kết thúc" />
                 <button class="find-map" type="submit" onclick="myDetails()">Tìm đường đi</button>
                   <div class="service" id="service-content">
                     <a href="#"> <i class="fa fa-hotel"></i></a>
@@ -62,6 +42,9 @@
                      <a href="#"><i class="fa fa-bus"></i></a>
                      <a href="#"><i class="fa fa-map"></i></a>  
                   </div>  
+         <div class="formBlock1" style="margin-left: 1300px;">
+			<button onclick="showAlert()"><img style="width: 46px;height: 46px;" src="img/trash.png" alt=""></button>
+		</div>
                    
                         <button class="button-login" id="login">Đăng nhập</button>
                     
@@ -89,4 +72,4 @@
         <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8"></script>
         <script src="app.js"></script>
     </body>
-</html>
+</html> 
