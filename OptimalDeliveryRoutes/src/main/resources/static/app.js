@@ -188,6 +188,7 @@
     elements.forEach(element => element.remove());
   	const remove = document.getElementById('myDetails');
 	 remove.remove();
+	 map.reset();
 
 
 }
