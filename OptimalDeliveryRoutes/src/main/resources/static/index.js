@@ -11,6 +11,6 @@ function myFunction() {
 
 function myDetails(){
   var details = document.getElementById("myDetails");
-  details.classList.toggle("details");
+  details.classList.add("details");
 }
 

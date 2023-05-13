@@ -186,7 +186,10 @@
     });
     const elements = document.querySelectorAll('.li_derec');
     elements.forEach(element => element.remove());
-  
+  	const remove = document.getElementById('myDetails');
+	 remove.remove();
+
+
 }
 
     // function that runs when form submitted
