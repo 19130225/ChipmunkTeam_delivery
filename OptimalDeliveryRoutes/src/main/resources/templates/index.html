@@ -1,0 +1,87 @@
+ <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<title>Chipmunk Web App</title>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css}" />
+         <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css}">
+        <link rel="stylesheet" th:href="@{css/style.css}">
+        <script src="index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css}">
+         <script type="text/javascript">
+	$(document).ready(function() {
+		$('#start, #destination').autocomplete({
+			source : 'search',
+			open: function(event, ui) {
+	            $('.ui-autocomplete').css('z-index', '9999');
+	        }
+		});
+	});
+</script>
+    </head>
+<body style="border: 0; margin: 0">
+	 <div id='map'>
+	 	
+	 </div>
+        <div class="formBlock" id="map-content">
+            <div class="logo">
+                <h1>ChipMunk</h1>
+                <img src="./img/logo.png">
+                <div class="menu">
+                    <button class="map" onclick="myFunction()">
+                        <img src="./img/menu.png">
+                    </button>
+                </div>
+            </div>
+            <input class="input" type="text" id="searchInput" placeholder="Nhập địa danh">
+            <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
+
+            <div id="places"></div>
+            <form id="form">
+
+
+                <input type="text" name="term" class="input" id="start" placeholder="Điểm bắt đầu" />
+                <input type="text" name="term" class="input" id="destination" placeholder="Điểm kết thúc" />
+                <button class="find-map" type="submit" onclick="myDetails()">Tìm đường đi</button>
+
+                  <div class="service" id="service-content">
+                    <a href="#"> <i class="fa fa-hotel"></i></a>
+                    <a href="#"> <i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                     <a href="#"><i class="fa fa-coffee"></i></a>
+                     <a href="#"><i class="fa fa-bus"></i></a>
+                     <a href="#"><i class="fa fa-map"></i></a>  
+                  </div>  
+         <div class="formBlock1" style="margin-left: 1300px;">
+
+		</div>
+                   
+                        <button class="button-login" id="login">Đăng nhập</button>
+                    
+            </form>
+            <div class="details">
+            
+                <div class="container-details" id="myDetails" >
+               
+                
+                    <ul class="list-details" >
+                     <li class="item">
+                            <img class="imgMap" src="./img/map.jpg">
+                        </li>
+
+
+                                    <div id="error-message"></div>
+
+                        <button class="find-map" style="margin-left: 18px" onclick="showAlert()">Xóa tuyến đường</button>
+                       
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8"></script>
+        <script src="app.js"></script>
+
+    </body>
+</html> 
