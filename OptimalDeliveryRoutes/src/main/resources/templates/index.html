@@ -4,6 +4,49 @@
         <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css}" />
          <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css}">
         <link rel="stylesheet" th:href="@{css/style.css}">
+        <style>
+            .autocomplete {
+                position: relative;
+            }
+            .autocomplete input {
+                padding-right: 25px;
+            }
+            .autocomplete .autocomplete-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                display: none;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-top: none;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            .autocomplete .autocomplete-results li {
+                position: relative;
+                padding: 5px;
+            }
+            .autocomplete .autocomplete-results li:hover {
+                background-color: #f2f2f2;
+                cursor: pointer;
+            }
+            .autocomplete .delete-icon {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                cursor: pointer;
+                font-size: 14px;
+            }
+        </style>
         <script src="index.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
@@ -33,9 +76,14 @@
                     </button>
                 </div>
             </div>
-            <input class="input" type="text" id="searchInput" placeholder="Nhập địa danh">
-            <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
 
+            <div class="autocomplete">
+
+                    <input class="input search-input"  id="searchInput" placeholder="Nhập địa danh">
+                    <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
+
+                <ul class="autocomplete-results"></ul>
+            </div>
             <div id="places"></div>
             <form id="form">
 

@@ -194,7 +194,7 @@
 
 }
 
-    // function that runs when form submitted
+
     function submitForm(event) {
         event.preventDefault();
 
@@ -217,9 +217,91 @@
 
     // call the submitForm() function when submitting the form
     form.addEventListener('submit', submitForm);
+const input = document.getElementById("searchInput");
+
+
+
+
+var apiResults;
+
+fetch("http://localhost:8080/getSearch")
+	.then(response => response.json())
+	.then(data => {
+		apiResults = data;
+		doSomethingWithApiResults();
+		doAddSearch();
+	})
+	.catch(error => {
+		console.error(error);
+	});
+var availableTags = [];
+function doSomethingWithApiResults() {
+
+
+	for (var i = 0; i < apiResults.length; i++) {
+		availableTags.push(apiResults[i].name);
+	}
+
+	var results = document.querySelector(".autocomplete-results");
+	function showResults(resultsList) {
+		results.innerHTML = "";
+		if (resultsList.length > 0) {
+			results.style.display = "block";
+			for (var i = 0; i < resultsList.length; i++) {
+				var li = document.createElement("li");
+				li.innerText = resultsList[i];
+				var deleteIcon = document.createElement("button");
+				deleteIcon.classList.add("delete-icon");
+				deleteIcon.innerHTML = "&#10005;";
+				li.append(deleteIcon);
+				results.append(li);
+				deleteIcon.addEventListener("click", function() {
+					var index = Array.prototype.indexOf.call(this.parentNode.parentNode.children, this.parentNode);
+					availableTags.splice(index, 1);
+					localStorage.setItem('autocompleteData', JSON.stringify(availableTags));
+					this.parentNode.remove();
+				});
+			}
+		} else {
+			results.style.display = "none";
+		}
+	}
+
+	input.addEventListener("input", function() {
+		var query = input.value;
+		var resultsList = [];
+		for (var i = 0; i < availableTags.length; i++) {
+			if (availableTags[i].toLowerCase().indexOf(query.toLowerCase()) > -1) {
+				resultsList.push(availableTags[i]);
+			}
+		}
+		showResults(resultsList);
+	});
+	document.addEventListener("click", function(event) {
+		if (!event.target.matches("#searchInput") && !event.target.matches(".delete-icon")) {
+			results.style.display = "none";
+		}
+	});
+	results.addEventListener("click", function(event) {
+		var selectedText = event.target.innerText;
+		input.value = selectedText;
+		results.style.display = "none";
+	});
+
+
+}
+function doAddSearch() {
+	var newTag = input.value.trim();
+	if (newTag && !availableTags.includes(newTag)) {
+		availableTags.push(newTag);
+		localStorage.setItem('autocompleteData', JSON.stringify(availableTags));
+		input.value = "";
+	}
+
+}
 
 function searchLocation() {
-	const searchInput = document.getElementById("searchInput").value;
+	const searchInput = input.value;
 	const apiKey = "LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8";
 	const url = `https://www.mapquestapi.com/geocoding/v1/address?key=${apiKey}&location=${encodeURIComponent(searchInput)}`;
 
@@ -251,10 +333,20 @@ function searchLocation() {
 
 
 			L.marker(latLng).addTo(map);
-
+			doAddSearch();
 		})
 		.catch(error => {
 			console.error(error);
 			alert("Đã xảy ra lỗi khi tìm kiếm địa danh. Vui lòng thử lại sau.");
 		});
 }
+
+
+
+
+
+
+
+
+
+

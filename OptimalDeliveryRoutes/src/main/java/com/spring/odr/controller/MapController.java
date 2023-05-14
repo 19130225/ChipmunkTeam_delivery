@@ -2,6 +2,8 @@ package com.spring.odr.controller;
 
 import java.util.List;
 
+import com.spring.odr.entity.Location;
+import com.spring.odr.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,8 @@ public class MapController {
 	
 	@Autowired
 	LocationService service;
-	
+
+
 	@GetMapping("/")
 	public String showMap() {
 		return "index";
