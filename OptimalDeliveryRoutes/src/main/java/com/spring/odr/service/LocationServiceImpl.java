@@ -17,5 +17,4 @@ public class LocationServiceImpl implements LocationService{
 	public List<String> search(String term) {
 		return locationRepository.search(term);
 	}
-
 }

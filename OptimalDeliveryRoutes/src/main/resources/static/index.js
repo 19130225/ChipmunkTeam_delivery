@@ -14,3 +14,4 @@ function myDetails(){
   details.classList.add("details");
 }
 
+

@@ -194,7 +194,7 @@
 
 }
 
-    // function that runs when form submitted
+
     function submitForm(event) {
         event.preventDefault();
 
@@ -217,3 +217,137 @@
 
     // call the submitForm() function when submitting the form
     form.addEventListener('submit', submitForm);
+const input = document.getElementById("searchInput");
+
+
+
+var apiResults;
+
+fetch("http://localhost:8080/getSearch")
+	.then(response => response.json())
+	.then(data => {
+		apiResults = data;
+		doSomethingWithApiResults();
+		doAddSearch();
+	})
+	.catch(error => {
+		console.error(error);
+	});
+var availableTags = [];
+function doSomethingWithApiResults() {
+
+
+	for (var i = 0; i < apiResults.length; i++) {
+		availableTags.push(apiResults[i].name);
+	}
+
+	var results = document.querySelector(".autocomplete-results");
+	function showResults(resultsList) {
+		results.innerHTML = "";
+		if (resultsList.length > 0) {
+			results.style.display = "block";
+			for (var i = 0; i < resultsList.length; i++) {
+				var li = document.createElement("li");
+				li.innerText = resultsList[i];
+				var deleteIcon = document.createElement("button");
+				deleteIcon.classList.add("delete-icon");
+				deleteIcon.innerHTML = "&#10005;";
+				li.append(deleteIcon);
+				results.append(li);
+				deleteIcon.addEventListener("click", function() {
+					var index = Array.prototype.indexOf.call(this.parentNode.parentNode.children, this.parentNode);
+					availableTags.splice(index, 1);
+					localStorage.setItem('autocompleteData', JSON.stringify(availableTags));
+					this.parentNode.remove();
+				});
+				results.addEventListener('click', function(event) {
+  var li = event.target.closest('li'); // tìm phần tử li chứa từ khóa được chọn
+  var deleteBtn = event.target.closest('.delete-icon'); // kiểm tra xem đối tượng được click có phải là nút X hay không
+  if (li && !deleteBtn) { // nếu tìm thấy phần tử li và không phải là nút X
+    var selectedText = li.childNodes[0].nodeValue.trim(); // lấy giá trị của phần tử li và loại bỏ khoảng trắng thừa
+    input.value = selectedText;
+    results.style.display = 'none';
+  } else if (deleteBtn) { // nếu đối tượng được click là nút X thì xóa từ khóa và trả về trạng thái ban đầu của ô input
+    input.value = '';
+  }
+});
+			}
+		} else {
+			results.style.display = "none";
+		}
+	}
+
+	input.addEventListener("input", function() {
+		var query = input.value;
+		var resultsList = [];
+		for (var i = 0; i < availableTags.length; i++) {
+			if (availableTags[i].toLowerCase().indexOf(query.toLowerCase()) > -1) {
+				resultsList.push(availableTags[i]);
+			}
+		}
+		showResults(resultsList);
+	});
+	
+	document.addEventListener("click", function(event) {
+		if (!event.target.matches("#searchInput") && !event.target.matches(".delete-icon")) {			
+			results.style.display = "none";
+		}
+	});
+	
+	results.addEventListener("click", function(event) {
+		var selectedText = event.target.innerText;
+		input.value = selectedText;
+		results.style.display = "none";
+	});
+	
+}
+function doAddSearch() {
+	var newTag = input.value.trim();
+	if (newTag && !availableTags.includes(newTag)) {
+		availableTags.push(newTag);
+		localStorage.setItem('autocompleteData', JSON.stringify(availableTags));
+		input.value = "";
+	}
+
+}
+
+function searchLocation() {
+	const searchInput = input.value;
+	const apiKey = "LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8";
+	const url = `https://www.mapquestapi.com/geocoding/v1/address?key=${apiKey}&location=${encodeURIComponent(searchInput)}`;
+
+	fetch(url)
+		.then(response => response.json())
+		.then(data => {
+
+			const location = data.results[0].locations[0];
+			const address = location.street || "";
+			const city = location.adminArea5 || "";
+			const state = location.adminArea3 || "";
+			const country = location.adminArea1 || "";
+			const latLng = location.latLng;
+			const result = `Địa chỉ: ${address}\nThành phố: ${city}\nTỉnh/Thành: ${state}\nQuốc gia: ${country} ${latLng.lat} ${latLng.lng}`;
+
+			/*alert(result);*/
+
+
+			map.remove();
+			map = L.map('map', {
+				layers: MQ.mapLayer({
+					key: 'LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8'
+				}),
+				center: latLng,
+				zoom: 12
+			});
+
+
+
+
+			L.marker(latLng).addTo(map);
+			doAddSearch();
+		})
+		.catch(error => {
+			console.error(error);
+			alert("Đã xảy ra lỗi khi tìm kiếm địa danh. Vui lòng thử lại sau.");
+		});
+}

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.spring.odr.service.LocationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,11 +24,10 @@ public class MapController {
 		return "index";
 	}
 
+
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> search(HttpServletRequest request) {
 		return service.search(request.getParameter("term"));
 	}
-
-
 }
