@@ -1,0 +1,118 @@
+ <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<title>Chipmunk Web App</title>
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css}" />
+         <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css}">
+        <link rel="stylesheet" th:href="@{css/style.css}">
+        <style>
+            .autocomplete {
+                position: relative;
+            }
+            .autocomplete input {
+                padding-right: 25px;
+            }
+            .autocomplete .autocomplete-results {
+                position: absolute;
+                top: 100%;
+                width:350px;
+                left: -25;
+                z-index: 1000;
+                display: none;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-top: none;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            .autocomplete .autocomplete-results li {
+                position: relative;
+                padding: 5px;
+            }
+            .autocomplete .autocomplete-results li:hover {
+                background-color: #f2f2f2;
+                cursor: pointer;
+            }
+            .autocomplete .delete-icon {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                cursor: pointer;
+                font-size: 14px;
+            }
+        </style>
+        <script src="index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css}">
+         <script type="text/javascript">
+	$(document).ready(function() {
+		$('#start, #destination').autocomplete({
+			source : 'search',
+			open: function(event, ui) {
+	            $('.ui-autocomplete').css('z-index', '9999');
+	        }
+		});
+	});
+</script>
+    </head>
+<body style="border: 0; margin: 0">
+	 <div id='map'>
+	 	
+	 </div>
+        <div class="formBlock" id="map-content">
+            <div class="logo">
+                <h1>ChipMunk</h1>
+                <img src="./img/logo.png">
+            </div>
+
+            <div class="autocomplete">
+
+                    <input class="input search-input"  id="searchInput" placeholder="Nhập địa danh">
+                    <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
+
+                <ul class="autocomplete-results"></ul>
+            </div>
+            <div id="places"></div>
+            <form id="form">
+
+                <input type="text" name="term" class="input" id="start" placeholder="Điểm bắt đầu" />
+                <input type="text" name="term" class="input" id="destination" placeholder="Điểm kết thúc" />
+                <button class="find-map" type="submit" onclick="myDetails()">Tìm đường đi</button>
+
+                    
+            </form>
+            <div class="details">
+            
+                <div class="container-details" id="myDetails" >
+               
+                
+                    <ul class="list-details" >
+                     <li class="item">
+                            <img class="imgMap" src="./img/map.jpg">
+                        </li>
+
+
+                                    <div id="error-message"></div>
+
+                        <button class="find-map" style="margin-left: 18px" onclick="showAlert()">Xóa tuyến đường</button>
+                       
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8"></script>
+        <script src="app.js"></script>
+
+    </body>
+</html> 
