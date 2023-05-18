@@ -112,7 +112,7 @@ a{
     border: 1px solid #ddd;
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 50px;
     padding: 10px;
     z-index: 999;
     box-shadow: 0 1px 5px rgba(0,0,0,0.65);

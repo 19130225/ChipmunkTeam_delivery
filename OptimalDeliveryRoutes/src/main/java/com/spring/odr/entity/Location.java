@@ -22,9 +22,7 @@ public class Location {
 		super();
 	}
 
-	public Location(Long id, String name) {
-		super();
-		this.id = id;
+	public Location(String name) {
 		this.name = name;
 	}
 
@@ -40,7 +38,7 @@ public class Location {
 		return name;
 	}
 
-	public void setLocation_name(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

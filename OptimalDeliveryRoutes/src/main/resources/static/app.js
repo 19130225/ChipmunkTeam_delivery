@@ -221,7 +221,6 @@ const input = document.getElementById("searchInput");
 
 
 
-
 var apiResults;
 
 fetch("http://localhost:8080/getSearch")
@@ -261,6 +260,17 @@ function doSomethingWithApiResults() {
 					localStorage.setItem('autocompleteData', JSON.stringify(availableTags));
 					this.parentNode.remove();
 				});
+				results.addEventListener('click', function(event) {
+  var li = event.target.closest('li'); // tìm phần tử li chứa từ khóa được chọn
+  var deleteBtn = event.target.closest('.delete-icon'); // kiểm tra xem đối tượng được click có phải là nút X hay không
+  if (li && !deleteBtn) { // nếu tìm thấy phần tử li và không phải là nút X
+    var selectedText = li.childNodes[0].nodeValue.trim(); // lấy giá trị của phần tử li và loại bỏ khoảng trắng thừa
+    input.value = selectedText;
+    results.style.display = 'none';
+  } else if (deleteBtn) { // nếu đối tượng được click là nút X thì xóa từ khóa và trả về trạng thái ban đầu của ô input
+    input.value = '';
+  }
+});
 			}
 		} else {
 			results.style.display = "none";
@@ -277,18 +287,19 @@ function doSomethingWithApiResults() {
 		}
 		showResults(resultsList);
 	});
+	
 	document.addEventListener("click", function(event) {
-		if (!event.target.matches("#searchInput") && !event.target.matches(".delete-icon")) {
+		if (!event.target.matches("#searchInput") && !event.target.matches(".delete-icon")) {			
 			results.style.display = "none";
 		}
 	});
+	
 	results.addEventListener("click", function(event) {
 		var selectedText = event.target.innerText;
 		input.value = selectedText;
 		results.style.display = "none";
 	});
-
-
+	
 }
 function doAddSearch() {
 	var newTag = input.value.trim();
@@ -317,7 +328,7 @@ function searchLocation() {
 			const latLng = location.latLng;
 			const result = `Địa chỉ: ${address}\nThành phố: ${city}\nTỉnh/Thành: ${state}\nQuốc gia: ${country} ${latLng.lat} ${latLng.lng}`;
 
-			alert(result);
+			/*alert(result);*/
 
 
 			map.remove();
@@ -326,7 +337,7 @@ function searchLocation() {
 					key: 'LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8'
 				}),
 				center: latLng,
-				zoom: 12
+				zoom: 14
 			});
 
 
@@ -340,13 +351,42 @@ function searchLocation() {
 			alert("Đã xảy ra lỗi khi tìm kiếm địa danh. Vui lòng thử lại sau.");
 		});
 }
+// Lấy tên địa danh từ tọa độ hiện tại
+const getPlaceName = async (latitude, longitude) => {
+	const apiKey = 'LkmLDVGn5JTwPZ3jy9CQMz5XSDmHX7h8';
+	const url = `https://www.mapquestapi.com/geocoding/v1/reverse?key=${apiKey}&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`;
 
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
 
+		if (data && data.results && data.results.length > 0) {
+			const placeName = data.results[0].locations[0].street || data.results[0].locations[0].adminArea5;
 
+			// Đặt tên địa danh vào ô input
+			document.getElementById('start').value = placeName;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
+// Lấy địa điểm hiện tại
+const getCurrentLocation = () => {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition((position) => {
+			const latitude = position.coords.latitude;
+			const longitude = position.coords.longitude;
 
+			// Gọi hàm lấy tên địa danh từ tọa độ
+			getPlaceName(latitude, longitude);
+		}, (error) => {
+			console.log(error);
+		});
+	} else {
+		console.log('Trình duyệt không hỗ trợ Geolocation');
+	}
+};
 
-
-
-
-
+// Gán sự kiện click cho nút "Lấy địa điểm hiện tại"
+document.getElementById('getCurrentLocationBtn').addEventListener('click', getCurrentLocation);

@@ -13,8 +13,9 @@
             }
             .autocomplete .autocomplete-results {
                 position: absolute;
-                top: 100%;
-                left: 0;
+
+                width:350px;
+                left: -25;
                 z-index: 1000;
                 display: none;
                 margin: 0;
@@ -70,42 +71,27 @@
             <div class="logo">
                 <h1>ChipMunk</h1>
                 <img src="./img/logo.png">
-                <div class="menu">
-                    <button class="map" onclick="myFunction()">
-                        <img src="./img/menu.png">
-                    </button>
-                </div>
             </div>
 
-            <div class="autocomplete">
 
-                    <input class="input search-input"  id="searchInput" placeholder="Nhập địa danh">
-                    <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
-
-                <ul class="autocomplete-results"></ul>
-            </div>
             <div id="places"></div>
             <form id="form">
 
-
                 <input type="text" name="term" class="input" id="start" placeholder="Điểm bắt đầu" />
+                <button id="getCurrentLocationBtn">Lấy địa điểm hiện tại</button>
                 <input type="text" name="term" class="input" id="destination" placeholder="Điểm kết thúc" />
                 <button class="find-map" type="submit" onclick="myDetails()">Tìm đường đi</button>
 
-                  <div class="service" id="service-content">
-                    <a href="#"> <i class="fa fa-hotel"></i></a>
-                    <a href="#"> <i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
-                     <a href="#"><i class="fa fa-coffee"></i></a>
-                     <a href="#"><i class="fa fa-bus"></i></a>
-                     <a href="#"><i class="fa fa-map"></i></a>  
-                  </div>  
-         <div class="formBlock1" style="margin-left: 1300px;">
-
-		</div>
-                   
-                        <button class="button-login" id="login">Đăng nhập</button>
                     
             </form>
+            <div class="autocomplete">
+
+                <input class="input search-input"  id="searchInput" placeholder="Nhập địa danh">
+                <ul class="autocomplete-results"></ul>
+                <button class="find-map" onclick="searchLocation()">Tìm kiếm</button>
+
+
+            </div>
             <div class="details">
             
                 <div class="container-details" id="myDetails" >
